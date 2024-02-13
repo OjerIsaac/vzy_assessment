@@ -5,7 +5,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { envVarsSchema } from './helpers';
 import { DatabaseModule } from './database';
 import { JWT_SECRET } from './base/constants';
-import { DemoModule } from './modules/demo/demo.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { DemoModule } from './modules/demo/demo.module';
       }),
       global: true,
     },
-    DemoModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

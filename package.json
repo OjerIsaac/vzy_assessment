@@ -1,7 +1,7 @@
 {
-  "name": "nestjs-boilerplate-2",
+  "name": "vzy-assessment",
   "version": "0.0.1",
-  "description": "nestjs boiler starter template 2",
+  "description": "Simple Nestjs Application that authenticate user and handle Stripe Webhook",
   "author": {
     "name": "Ojerumu Isaac",
     "email": "isaacojerumu@gmail.com"
@@ -45,6 +45,7 @@
     "@nestjs/event-emitter": "^2.0.3",
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/mapped-types": "*",
+    "@nestjs/mongoose": "^10.0.4",
     "@nestjs/platform-express": "^10.3.0",
     "@nestjs/typeorm": "^10.0.1",
     "bcrypt": "^5.1.1",
@@ -56,6 +57,7 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.4.4",
+    "mongoose": "^8.1.2",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.3",
     "otp-generator": "^4.0.1",

@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ErrorHelper } from '../../utils';
 import { PaginationDto, PaginationMetadataDto, PaginationResultDto } from '../../queries/dto';
-import { DemoRepository } from './repository';
-import { DemoDto } from './dto';
+import { UserRepository } from './repository';
+import { UserDto } from './dto';
 
 @Injectable()
-export class DemoService {
-  constructor(private demoRepo: DemoRepository) {}
+export class UserService {
+  constructor(private userRepo: UserRepository) {}
 
-  async createDemo(dto: DemoDto) {
-    const demo = await this.demoRepo.create({
+  async createDemo(dto: UserDto) {
+    const demo = await this.userRepo.create({
       ...dto,
     });
 
@@ -17,7 +17,7 @@ export class DemoService {
   }
 
   async getDemo(id: string) {
-    const demo = await this.demoRepo.findOne({
+    const demo = await this.userRepo.findOne({
       where: {
         id,
       },
@@ -31,7 +31,7 @@ export class DemoService {
   }
 
   async getAllDemo(paginationDto: PaginationDto) {
-    const [demo, itemCount] = await this.demoRepo.findAndCount(paginationDto);
+    const [demo, itemCount] = await this.userRepo.findAndCount(paginationDto);
 
     const pageMetaDto = new PaginationMetadataDto({
       itemCount,
