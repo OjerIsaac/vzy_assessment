@@ -1,7 +1,7 @@
 {
-  "name": "nestjs-boilerplate-1",
+  "name": "vzy-assessment",
   "version": "0.0.1",
-  "description": "nestjs boiler starter template",
+  "description": "Simple Nestjs Application that authenticate user and handle Stripe Webhook",
   "author": {
     "name": "Ojerumu Isaac",
     "email": "isaacojerumu@gmail.com"
