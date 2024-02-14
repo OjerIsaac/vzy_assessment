@@ -1,43 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { ErrorHelper } from '../../utils';
-import { PaginationDto, PaginationMetadataDto, PaginationResultDto } from '../../queries/dto';
-import { UserRepository } from './repository';
-import { UserDto } from './dto';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { User } from "./user.schema";
 
 @Injectable()
 export class UserService {
-  constructor(private userRepo: UserRepository) {}
+    constructor(@InjectModel(User.name) private logModel: Model<User>) {}
 
-  async createDemo(dto: UserDto) {
-    const demo = await this.userRepo.create({
-      ...dto,
-    });
-
-    return demo;
-  }
-
-  async getDemo(id: string) {
-    const demo = await this.userRepo.findOne({
-      where: {
-        id,
-      },
-    });
-
-    if (!demo) {
-      ErrorHelper.NotFoundException('Record not found');
+    async createUser(data: Log): Promise<Log> {
+        const newLog = await this.logModel.create(log);
+        return newLog.save();
     }
-
-    return demo;
-  }
-
-  async getAllDemo(paginationDto: PaginationDto) {
-    const [demo, itemCount] = await this.userRepo.findAndCount(paginationDto);
-
-    const pageMetaDto = new PaginationMetadataDto({
-      itemCount,
-      pageOptionsDto: paginationDto,
-    });
-
-    return new PaginationResultDto(demo, pageMetaDto);
-  }
 }

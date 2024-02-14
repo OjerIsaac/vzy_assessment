@@ -1,30 +1,27 @@
-import 'reflect-metadata';
-import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
-
-import { AppModule } from './app.module';
-import { TransformInterceptor } from './interceptors';
-import { HttpExceptionFilter } from './filters';
-import { ValidationPipe } from './pipes';
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import * as compression from "compression";
+import helmet from "helmet";
+import { VersioningType } from "@nestjs/common";
+import { ValidationPipe } from "./pipes/validation.pipe";
+import * as cookieParser from "cookie-parser";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const logger = new Logger('NestApplication');
+    const app = await NestFactory.create(AppModule, {
+        rawBody: true,
+    });
 
-  app.enableCors();
-  app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalFilters(new HttpExceptionFilter());
-
-  app.setGlobalPrefix('/api');
-
-  const configService = app.get(ConfigService);
-
-  const port = configService.get('PORT');
-
-  await app.listen(port);
-  logger.log(`Application is running on: ${await app.getUrl()}`);
+    app.use(cookieParser());
+    app.useGlobalPipes(new ValidationPipe());
+    app.use(compression());
+    app.use(helmet());
+    app.enableCors({
+        credentials: true,
+        origin: [process.env.WEBSITE_URL, "http://localhost:3000", "http://localhost:3001"],
+    });
+    app.enableVersioning({
+        type: VersioningType.URI,
+    });
+    await app.listen(Number(process.env.PORT) || 3000);
 }
-
 bootstrap();

@@ -1,35 +1,12 @@
-import { Controller, Post, Body, Get, Param, Query } from '@nestjs/common';
-import { DemoService } from './demo.service';
-import { HttpResponse } from '../../utils';
-import { PaginationDto } from '../../queries/dto';
-import { DemoDto } from './dto';
-import { validateUUID } from '../../helpers';
+import { Controller, Body } from '@nestjs/common';
+import { UserService } from './user.service';
+import { UserDto } from './user.model';
 
-@Controller('demo')
-export class DemoController {
-  constructor(private readonly demoService: DemoService) {}
+@Controller({ path: "user", version: "1" })
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
-  @Post('create')
-  async create(@Body() dto: DemoDto) {
-    const data = await this.demoService.createDemo(dto);
-
-    return HttpResponse.success({ data, message: 'Record created successfully' });
-  }
-
-  @Get('/:id')
-  async getMessage(@Param('id') id: string) {
-    if (!validateUUID(id)) {
-      return HttpResponse.error({ data: '', message: 'bad input' });
-    }
-    const data = await this.demoService.getDemo(id);
-
-    return HttpResponse.success({ data, message: 'Record fetched successfully' });
-  }
-
-  @Get('/')
-  async getAllMessage(@Query() query: PaginationDto) {
-    const data = await this.demoService.getAllDemo(query);
-
-    return HttpResponse.success({ data, message: 'Record fetched successfully' });
+  create(@Body() createUserDto: UserDto) {
+    return this.userService.createUser(createUserDto);
   }
 }
