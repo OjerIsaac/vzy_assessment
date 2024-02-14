@@ -12,7 +12,7 @@ Simple Nestjs Application that authenticate user and handle Stripe Webhook
 - run `yarn install`
 - run mv .env.example .env
 - update the .env with local variables
-- run `yarn run prepare` to install git pre-hook
+- run `yarn run huskyprepare` to install git pre-hook
 - run `yarn run start:dev`
 
 #### Documentation
